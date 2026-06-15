@@ -76,10 +76,10 @@ namespace Voxelize {
         }
 
         // open
-        void Allocate(Voxelize::Length _allocation_size) {
-            start = malloc(_allocation_size);
+        void Allocate(Voxelize::Length _allocationSize) {
+            start = malloc(_allocationSize);
             if (start != 0) {
-                end = (Voxelize::Address)((Voxelize::U64)start + _allocation_size - 1);
+                end = (Voxelize::Address)((Voxelize::U64)start + _allocationSize - 1);
             } else {
                 end = 0;
             }
@@ -119,17 +119,17 @@ namespace Voxelize {
         Voxelize::Error error;
 
         // load file into std::string
-        std::string LoadTextFile(std::string _file_path) {
+        std::string LoadTextFile(std::string _filePath) {
             // null init error
             error = Voxelize::Error();
 
             // open file stream
-            std::ifstream file(_file_path);
+            std::ifstream file(_filePath);
 
             // check for error
             if (!file) {
                 // setup error
-                error = Voxelize::Error(true, "\"error\": {\n\t\"reason\": \"Text file could not be loaded / found.\",\n\t\"file_path\": \"" + _file_path + "\"\n}");
+                error = Voxelize::Error(true, "\"error\": {\n\t\"reason\": \"Text file could not be loaded / found.\",\n\t\"file_path\": \"" + _filePath + "\"\n}");
 
                 return "";
             }

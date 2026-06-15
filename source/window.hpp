@@ -40,14 +40,14 @@ namespace Voxelize::Graphics {
     // window
     class Window {
     public:
-        SDL_Window* window_context;
-        SDL_GLContext sdl3_opengl_context;
-        Voxelize::Graphics::WindowStyling WindowStyling;
+        SDL_Window* windowContext;
+        SDL_GLContext SDL3OpenGLContext;
+        Voxelize::Graphics::WindowStyling windowStyling;
 
         Window() {
-            window_context = 0;
-            sdl3_opengl_context = 0;
-            WindowStyling = Voxelize::Graphics::WindowStyling();
+            windowContext = 0;
+            SDL3OpenGLContext = 0;
+            windowStyling = Voxelize::Graphics::WindowStyling();
         }
 
         // open window
@@ -56,7 +56,7 @@ namespace Voxelize::Graphics {
             Voxelize::Error output = Voxelize::Error();
 
             // set styling
-            WindowStyling = style;
+            windowStyling = style;
 
             // setup opengl expectations
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -64,17 +64,17 @@ namespace Voxelize::Graphics {
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
             // initalize window
-            window_context = SDL_CreateWindow((const char*)style.title.c_str(), style.width, style.height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
-            if (window_context == 0) {
+            windowContext = SDL_CreateWindow((const char*)style.title.c_str(), style.width, style.height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+            if (windowContext == 0) {
                 // return error
                 return Voxelize::Error(true, "\"error\": {\"reason\": \"Failed to create SDL3 window context.\"}");
             }
 
             // initalize opengl context
-            sdl3_opengl_context = SDL_GL_CreateContext(window_context);
-            if (sdl3_opengl_context == 0) {
+            SDL3OpenGLContext = SDL_GL_CreateContext(windowContext);
+            if (SDL3OpenGLContext == 0) {
                 // quit cleanly
-                SDL_DestroyWindow(window_context);
+                SDL_DestroyWindow(windowContext);
 
                 // return error
                 return Voxelize::Error(true, "\"error\": {\"reason\": \"Failed to create OpenGL context.\"}");
@@ -82,11 +82,11 @@ namespace Voxelize::Graphics {
 
             // initalize glew
             glewExperimental = GL_TRUE;
-            GLenum glew_error = glewInit();
-            if (glew_error != GLEW_OK) {
+            GLenum glewError = glewInit();
+            if (glewError != GLEW_OK) {
                 // quit cleanly
-                SDL_GL_DestroyContext(sdl3_opengl_context);
-                SDL_DestroyWindow(window_context);
+                SDL_GL_DestroyContext(SDL3OpenGLContext);
+                SDL_DestroyWindow(windowContext);
 
                 // return error
                 return Voxelize::Error(true, "\"error\": {\"reason\": \"GLEW did not initialize.\"}");
@@ -102,14 +102,14 @@ namespace Voxelize::Graphics {
         // close window
         void Close() {
             // close Graphics
-            SDL_GL_DestroyContext(sdl3_opengl_context);
-            SDL_DestroyWindow(window_context);
+            SDL_GL_DestroyContext(SDL3OpenGLContext);
+            SDL_DestroyWindow(windowContext);
         }
 
         // setup at loop end to setup next frame
         void NextFrame() {
             // display window data
-            SDL_GL_SwapWindow(window_context);
+            SDL_GL_SwapWindow(windowContext);
 
             // clear buffer
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -118,7 +118,7 @@ namespace Voxelize::Graphics {
         // update window size
         void UpdateWindowSize(Voxelize::Graphics::WindowWidth _width, Voxelize::Graphics::WindowHeight _height) {
             // update stats
-            WindowStyling.update_window_size(_width, _height);
+            windowStyling.update_window_size(_width, _height);
 
             // update OpenGL
             glViewport(0, 0, (GLsizei)_width, (GLsizei)_height);

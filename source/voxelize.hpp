@@ -10,14 +10,14 @@
 namespace Voxelize {
     class Game {
         // game state
-        Voxelize::Graphics::Window game_window;
-        Voxelize::Boolean is_running;
+        Voxelize::Graphics::Window gameWindow;
+        Voxelize::Boolean isRunning;
 
         // shaders
-        Voxelize::Graphics::Shaders chunk_shaders;
+        Voxelize::Graphics::Shaders chunkShaders;
 
         // file loaders
-        Voxelize::FileLoader file_loader;
+        Voxelize::FileLoader fileLoader;
 
     public:
         // error
@@ -25,14 +25,14 @@ namespace Voxelize {
 
         Game() {
             // game state
-            game_window = Voxelize::Graphics::Window();
-            is_running = false;
+            gameWindow = Voxelize::Graphics::Window();
+            isRunning = false;
 
             // shaders
-            chunk_shaders = Voxelize::Graphics::Shaders();
+            chunkShaders = Voxelize::Graphics::Shaders();
 
             // file loaders
-            file_loader = Voxelize::FileLoader();
+            fileLoader = Voxelize::FileLoader();
 
             // error
             error = Voxelize::Error();
@@ -40,18 +40,18 @@ namespace Voxelize {
 
     private:
         // compile shader program
-        Voxelize::Graphics::Shaders CompileShaders(std::string vertex_shader_file_path, std::string fragment_shader_file_path) {
+        Voxelize::Graphics::Shaders CompileShaders(std::string vertexShaderFilePath, std::string fragmentShaderFilePath) {
             Voxelize::Graphics::Shaders output;
 
             // load files
-            std::string vertex = file_loader.LoadTextFile(vertex_shader_file_path);
-            if (file_loader.error.occured) {
-                error = file_loader.error;
+            std::string vertex = fileLoader.LoadTextFile(vertexShaderFilePath);
+            if (fileLoader.error.occured) {
+                error = fileLoader.error;
                 return Voxelize::Graphics::Shaders();
             }
-            std::string fragment = file_loader.LoadTextFile(fragment_shader_file_path);
-            if (file_loader.error.occured) {
-                error = file_loader.error;
+            std::string fragment = fileLoader.LoadTextFile(fragmentShaderFilePath);
+            if (fileLoader.error.occured) {
+                error = fileLoader.error;
                 return Voxelize::Graphics::Shaders();
             }
 
@@ -81,38 +81,38 @@ namespace Voxelize {
             }
 
             // start runner
-            is_running = true;
+            isRunning = true;
 
             // open game Window
-            game_window = Voxelize::Graphics::Window();
-            error = game_window.Open(Voxelize::Graphics::WindowStyling("Voxelize", 800, 600));
+            gameWindow = Voxelize::Graphics::Window();
+            error = gameWindow.Open(Voxelize::Graphics::WindowStyling("Voxelize", 800, 600));
             if (error.occured) {
                 return;
             }
 
             // open shaders
-            chunk_shaders = CompileShaders("./source/shaders/chunks/vertex.glsl", "./source/shaders/chunks/fragment.glsl");
+            chunkShaders = CompileShaders("./source/shaders/chunks/vertex.glsl", "./source/shaders/chunks/fragment.glsl");
             if (error.occured) {
                 return;
             }
 
             // temp event
-            SDL_Event temp_event;
+            SDL_Event tempEvent;
 
             // game loop
-            while (is_running) {
+            while (isRunning) {
                 // check for quit
-                while (SDL_PollEvent(&temp_event)) {
-                    switch (temp_event.type) {
+                while (SDL_PollEvent(&tempEvent)) {
+                    switch (tempEvent.type) {
                     // in case of game stop
                     case SDL_EVENT_QUIT:
                         // stop game
-                        is_running = false;
+                        isRunning = false;
 
                         break;
                     // in case of Window resize
                     case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
-                        glViewport(0, 0, temp_event.window.data1, temp_event.window.data2);
+                        glViewport(0, 0, tempEvent.window.data1, tempEvent.window.data2);
 
                         break;
                     default:
@@ -121,11 +121,11 @@ namespace Voxelize {
                 }
 
                 // next frame
-                game_window.NextFrame();
+                gameWindow.NextFrame();
             }
 
             // close game
-            game_window.Close();
+            gameWindow.Close();
             SDL_Quit();
 
             // thank player
