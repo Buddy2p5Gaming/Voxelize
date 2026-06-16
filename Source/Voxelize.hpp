@@ -1,9 +1,9 @@
 #pragma once
 
 // Voxelize
-#include "basic.hpp"
-#include "window.hpp"
-#include "shaders.hpp"
+#include "Basic.hpp"
+#include "Window.hpp"
+#include "Shaders.hpp"
 
 /* Game Loop */
 namespace Voxelize {
@@ -90,7 +90,7 @@ namespace Voxelize {
             }
 
             // open shaders
-            chunkShaders = CompileShaders("./source/shaders/chunks/vertex.glsl", "./source/shaders/chunks/fragment.glsl");
+            chunkShaders = CompileShaders("./Source/Shaders/Chunks/Vertex.glsl", "./Source/Shaders/Chunks/Fragment.glsl");
             if (error.occured) {
                 return;
             }

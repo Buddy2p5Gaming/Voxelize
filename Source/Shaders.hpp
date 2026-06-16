@@ -2,7 +2,7 @@
 
 /* Include */
 // Voxelize
-#include "basic.hpp"
+#include "Basic.hpp"
 
 /* Shaders */
 namespace Voxelize::Graphics {

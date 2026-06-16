@@ -1,4 +1,4 @@
-#include "voxelize.hpp"
+#include "Voxelize.hpp"
 
 int main() {
     // run game
