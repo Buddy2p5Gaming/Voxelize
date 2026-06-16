@@ -4,7 +4,6 @@
 #include "basic.hpp"
 #include "window.hpp"
 #include "shaders.hpp"
-#include <SDL3/SDL_events.h>
 
 /* Game Loop */
 namespace Voxelize {

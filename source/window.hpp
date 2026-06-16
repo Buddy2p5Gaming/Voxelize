@@ -31,7 +31,7 @@ namespace Voxelize::Graphics {
         }
 
         // update size (DOES NOT UPDATE OPENGL, just updates the values)
-        void update_window_size(Voxelize::Graphics::WindowWidth _width, Voxelize::Graphics::WindowHeight _height) {
+        void UpdateWindowSize(Voxelize::Graphics::WindowWidth _width, Voxelize::Graphics::WindowHeight _height) {
             width = _width;
             height = _height;
         }
@@ -118,7 +118,7 @@ namespace Voxelize::Graphics {
         // update window size
         void UpdateWindowSize(Voxelize::Graphics::WindowWidth _width, Voxelize::Graphics::WindowHeight _height) {
             // update stats
-            windowStyling.update_window_size(_width, _height);
+            windowStyling.UpdateWindowSize(_width, _height);
 
             // update OpenGL
             glViewport(0, 0, (GLsizei)_width, (GLsizei)_height);
