@@ -2,6 +2,7 @@
 
 // Voxelize
 #include "Basic.hpp"
+#include "Chunk.hpp"
 #include "Window.hpp"
 #include "Shaders.hpp"
 
